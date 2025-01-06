@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.account-right-part {
+  background-image: url("/image.svg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #010852;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgb(84, 48, 143);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(61, 22, 129);
+}
