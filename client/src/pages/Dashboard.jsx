@@ -9,6 +9,8 @@ import {
 import { useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { IoMdCloseCircle } from "react-icons/io";
+import PhoneInput from "react-phone-input-2";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [fileImage, setFileImage] = useState(null);
@@ -19,7 +21,10 @@ const Dashboard = () => {
     type: "",
     price: "",
     image: "",
+    location: "",
+    phoneNumberItem: "",
   });
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(null);
 
   //? handleFileChange:
@@ -50,6 +55,8 @@ const Dashboard = () => {
           type: newProduct.type,
           price: Number(newProduct.price),
           image: newProduct.image,
+          location: newProduct.location,
+          phoneNumberItem: newProduct.phoneNumberItem,
         }),
       });
       const data = await res.json();
@@ -65,7 +72,14 @@ const Dashboard = () => {
           type: "",
           price: "",
           image: "",
+          location: "",
+          phoneNumberItem: "",
         });
+        if (newProduct.type === "Home") {
+          navigate("/");
+        } else {
+          navigate("/ads");
+        }
         fileRef.current.value = null;
         setFileImage(null);
       }
@@ -137,6 +151,38 @@ const Dashboard = () => {
               </div>
               <div className="flex flex-col gap-2">
                 <Label
+                  value="Location : "
+                  className="capitalize ml-1 text-sm md:text-md font-semibold text-blue-600"
+                />
+                <TextInput
+                  type="text"
+                  value={newProduct.location}
+                  onChange={(e) =>
+                    setNewProduct({ ...newProduct, location: e.target.value })
+                  }
+                  placeholder="Enter the price..."
+                  id="location"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label
+                  value="Phone Number: "
+                  className="capitalize ml-1 text-sm md:text-md font-semibold text-blue-600"
+                />
+                <PhoneInput
+                  country={"us"}
+                  inputStyle={{ width: "100%" }}
+                  value={newProduct.phoneNumberItem}
+                  onChange={(value) =>
+                    setNewProduct({
+                      ...newProduct,
+                      phoneNumberItem: value,
+                    })
+                  }
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label
                   value="product type :"
                   className="capitalize ml-1 text-sm md:text-md font-semibold text-blue-600"
                 />
@@ -149,10 +195,8 @@ const Dashboard = () => {
                   id="type"
                 >
                   <option>Select product type...</option>
-                  <option value="Electronics">Electronics</option>
-                  <option value="Clothing">Clothing</option>
                   <option value="Home">Home</option>
-                  <option value="Other">Other</option>
+                  <option value="Ads">Ads</option>
                 </Select>
               </div>
               <div className="flex flex-col  gap-2">

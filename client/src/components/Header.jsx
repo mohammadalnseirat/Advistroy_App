@@ -44,7 +44,7 @@ const Header = () => {
         </span>
       </Link>
       <div className="flex items-center gap-2 md:order-2">
-        {currentUser ? (
+        {currentUser && (
           <Button
             size="sm"
             type="button"
@@ -60,11 +60,13 @@ const Header = () => {
               "Sign Out"
             )}
           </Button>
-        ) : (
+        )}
+        {pathname === "/" && !currentUser && (
           <Button size="sm">
             <Link to={"/sign-in"}>Sign In</Link>
           </Button>
         )}
+
         {currentUser && currentUser.isAdmin && (
           <Button
             size="sm"

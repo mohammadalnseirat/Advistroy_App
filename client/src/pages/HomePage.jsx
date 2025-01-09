@@ -19,7 +19,10 @@ const HomePage = () => {
           return;
         }
         if (res.ok) {
-          setProducts(data);
+          const filteredProducts = data.filter(
+            (product) => product.type === "Home"
+          );
+          setProducts(filteredProducts);
         }
       } catch (error) {
         console.error("Failed to fetch products:", error.message);
@@ -75,19 +78,26 @@ const HomePage = () => {
               {products.map((product) => (
                 <div
                   key={product._id}
-                  className="flex relative h-full items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white"
+                  className="flex h-full items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white"
                 >
                   <img
                     src={product.image}
                     alt="product-image"
                     className="object-cover overflow-hidden w-full h-full"
                   />
-                  <div className="absolute flex items-center justify-center top-[50%] sm:top-[50%] sm:left-[50%] px-4 py-4 rounded-lg  bg-gray-200 text-gray-800">
-                    <h4 className="text-2xl font-semibold">{product.title}</h4>
-                  </div>
                 </div>
               ))}
             </Carousel>
+          </div>
+        )}
+
+        {products && products.length === 0 && (
+          <div className="h-60 sm:h-64 xl:h-80 2xl:h-96 mt-10 rounded-lg">
+            <div className="flex h-full items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white">
+              <p className="text-4xl font-mono font-semibold">
+                No Products Found.
+              </p>
+            </div>
           </div>
         )}
         {/* Hero Section End Here */}

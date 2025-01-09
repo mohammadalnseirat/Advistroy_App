@@ -1,9 +1,32 @@
-import { Button, Label, Select, TextInput } from "flowbite-react";
+import { Button, Label, Select, Spinner, TextInput } from "flowbite-react";
 import { RiColorFilterFill } from "react-icons/ri";
-import { jobs } from "../utils/constant";
 import JobCard from "../components/JobCard";
+import { useEffect, useState } from "react";
 
 const Ads = () => {
+  const [ads, setAds] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const fetchAdsData = async () => {
+      try {
+        const res = await fetch("/api/v1/products/get-all-products");
+        const data = await res.json();
+        if (data.success === false) {
+          console.error("Failed to fetch ads:", data.message);
+          return;
+        }
+        if (res.ok) {
+          const filteredAds = data.filter((ad) => ad.type === "Ads");
+          setAds(filteredAds);
+        }
+      } catch (error) {
+        console.log("Error fetching ads:", error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchAdsData();
+  }, []);
   return (
     <div className="mt-10 min-h-screen">
       <div className=" p-4 max-w-7xl mx-auto ">
@@ -82,15 +105,15 @@ const Ads = () => {
               <div className="flex items-center justify-between border-b pb-3">
                 <p className="text-gray-600 font-semibold">
                   Showing:{" "}
-                  <span className="font-normal text-blue-600">
+                  <span className="font-normal text-sm md:text-md text-blue-600">
                     {" "}
-                    600 filtered jobs
+                    {ads.length} Filtered {ads.length > 1 ? "Jobs" : "Job"}
                   </span>
                 </p>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
                   <Label
                     value="Sort By :"
-                    className="font-semibold text-gray-600 text-lg"
+                    className="font-semibold text-gray-600  text-sm md:text-lg"
                   />
                   <Select className="text-blue-600">
                     <option className="text-blue-600" value="relevance">
@@ -108,9 +131,19 @@ const Ads = () => {
               {/* Card Part Start Here */}
               <div className="mt-5">
                 <div className="flex flex-wrap gap-5">
-                  {jobs.map((job) => (
-                    <JobCard job={job} key={job.id} />
-                  ))}
+                  {isLoading && (
+                    <div className="flex items-center justify-center mx-auto text-gray-600 text-xl my-10">
+                      <Spinner size="xl" color="failure" />
+                    </div>
+                  )}
+                  {!isLoading && ads.length === 0 && (
+                    <div className="flex items-center justify-center mx-auto font-semibold text-red-600 text-3xl my-10 animate-bounce">
+                      No ADS Found.
+                    </div>
+                  )}
+                  {ads &&
+                    ads.length > 0 &&
+                    ads.map((item) => <JobCard key={item._id} item={item} />)}
                 </div>
               </div>
 

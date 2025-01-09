@@ -23,6 +23,14 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    location: {
+      type: String,
+      required: true,
+    },
+    phoneNumberItem: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
