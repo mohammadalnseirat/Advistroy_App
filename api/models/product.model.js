@@ -25,11 +25,11 @@ const productSchema = new mongoose.Schema(
     },
     location: {
       type: String,
-      required: true,
+      required: false,
     },
     phoneNumberItem: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   { timestamps: true }

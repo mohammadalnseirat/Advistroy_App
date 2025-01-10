@@ -73,8 +73,8 @@ const HomePage = () => {
           </div>
         )}
         {products && products.length > 0 && (
-          <div className="h-60 sm:h-64 xl:h-80 2xl:h-96 mt-10 rounded-lg">
-            <Carousel className="h-[320px]">
+          <div className="h-60  sm:h-64 xl:h-80 2xl:h-96 mt-10 rounded-lg">
+            <Carousel className="">
               {products.map((product) => (
                 <div
                   key={product._id}
@@ -83,7 +83,7 @@ const HomePage = () => {
                   <img
                     src={product.image}
                     alt="product-image"
-                    className="object-cover overflow-hidden w-full h-full"
+                    className="object-fill overflow-hidden  w-full h-full"
                   />
                 </div>
               ))}

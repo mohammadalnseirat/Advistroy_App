@@ -18,14 +18,7 @@ export const createADS = async (req, res, next) => {
     if (!req.user.isAdmin) {
       return next(handleError(403, "You are not allowed to create a post!"));
     }
-    if (
-      !title ||
-      !description ||
-      !type ||
-      !price ||
-      !location ||
-      !phoneNumberItem
-    ) {
+    if (!title || !description || !type || !price) {
       return next(handleError(403, "Please Fill All Required Fields!"));
     }
     if (!image) {

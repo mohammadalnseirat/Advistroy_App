@@ -95,9 +95,6 @@ const Ads = () => {
                   <Button color="purple">Search</Button>
                 </form>
               </div>
-              <div className="mt-10 hidden md:block">
-                <img src="/image-ads.png" alt="image-ads" />
-              </div>
             </div>
             {/* Left Side Part End Here */}
             {/* Right Part Start Here */}

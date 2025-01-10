@@ -61,7 +61,6 @@ const ContactUs = () => {
                 />
                 <TextInput
                   type="email"
-                  id="email"
                   name="user_email"
                   placeholder="Enter your Email..."
                 />

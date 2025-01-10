@@ -19,9 +19,25 @@ export const signUpUser = async (req, res, next) => {
     ) {
       return next(handleError(403, "Please Fill All Required Fields!"));
     }
-    const existingUser = await User.findOne({ email });
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(phoneNumber)) {
+      return next(
+        handleError(
+          403,
+          "Invalid phone number format. Please enter a valid phone number.!"
+        )
+      );
+    }
+    const existingUser = await User.findOne({
+      $or: [{ email }, { phoneNumber }],
+    });
     if (existingUser) {
-      return next(handleError(403, "Invalid email or password!"));
+      return next(
+        handleError(
+          403,
+          "Invalid email or password or phone number already in use, please enter a different email or phone number!"
+        )
+      );
     }
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;

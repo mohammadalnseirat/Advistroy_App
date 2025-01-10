@@ -21,9 +21,15 @@ const JobCard = ({ item }) => {
           {item.title}
         </h3>
         <div className="flex items-center justify-between">
-          <p className="flex items-center gap-1">
-            <FaLocationDot className="text-green-600" />
-            {item.location}
+          <p
+            className={`flex items-center gap-1 ${
+              item.location ? "text-gray-900" : "text-red-600"
+            }`}
+          >
+            <FaLocationDot
+              className={`${item.location ? "text-green-600" : "text-red-600"}`}
+            />
+            {item.location ? item.location : "---"}
           </p>
           <p className="flex items-center gap-1">
             <GiMoneyStack className="text-green-600 size-5" />
@@ -31,9 +37,17 @@ const JobCard = ({ item }) => {
           </p>
         </div>
         <div className="flex items-center justify-between">
-          <p className="flex items-center gap-1">
-            <FaPhoneAlt className="text-green-600" />
-            {item.phoneNumberItem}
+          <p
+            className={`flex items-center gap-1 ${
+              item.phoneNumberItem ? "text-gray-900" : "text-red-600"
+            }`}
+          >
+            <FaPhoneAlt
+              className={`${
+                item.phoneNumberItem ? "text-green-600" : "text-red-600"
+              }`}
+            />
+            {item.phoneNumberItem ? item.phoneNumberItem : "---"}
           </p>
           <p className="flex items-center gap-1">
             <MdOutlineDateRange className="text-green-600" />
