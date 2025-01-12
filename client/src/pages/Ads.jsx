@@ -1,10 +1,12 @@
 import { Button, Label, Select, Spinner, TextInput } from "flowbite-react";
-import { RiColorFilterFill } from "react-icons/ri";
+// import { RiColorFilterFill } from "react-icons/ri";
 import JobCard from "../components/JobCard";
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 const Ads = () => {
   const [ads, setAds] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchAdsData = async () => {
@@ -27,6 +29,26 @@ const Ads = () => {
     };
     fetchAdsData();
   }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    try {
+      const filteredSerach = ads.filter((ad) => {
+        return (
+          ad.title.toLowerCase().includes(searchTerm.toLowerCase()),
+          ad.description.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      });
+      if (filteredSerach.length === 0) {
+        toast.error("No products found for this search, please try again!");
+        return;
+      }
+      setAds(filteredSerach);
+      setSearchTerm("");
+    } catch (error) {
+      console.log("Error searching ads:", error.message);
+    }
+  };
   return (
     <div className="mt-10 min-h-screen">
       <div className=" p-4 max-w-7xl mx-auto ">
@@ -36,18 +58,22 @@ const Ads = () => {
             Falcon Ads
           </h1>
           <div className="flex p-3 w-fit border border-blue-500 rounded-lg flex-1 items-center justify-between gap-2">
-            <TextInput
-              placeholder="Type here for search..."
-              className="w-[250px] sm:w-[500px]"
-            />
-            <Button>Search</Button>
+            <form onSubmit={handleSearch} className="flex items-center gap-1">
+              <TextInput
+                placeholder="Type here for search..."
+                className="w-[250px] sm:w-[500px]"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <Button type="submit">Search</Button>
+            </form>
           </div>
         </div>
         {/* Header Part End Here */}
-        <div className="mt-20">
+        <div className="mt-10">
           <div className="flex flex-col md:flex-row">
             {/* Left Side Part Start Here */}
-            <div className="p-7 sm:w-[400px] border-b border-b-gray-400 sm:border-b-0 sm:border-r-[1px] md:border-r-gray-300 ">
+            {/* <div className="p-7 sm:w-[400px] border-b border-b-gray-400 sm:border-b-0 sm:border-r-[1px] md:border-r-gray-300 ">
               <div className="flex flex-col  gap-6 w-full">
                 <p className="flex items-center gap-6 text-blue-600 text-xl font-semibold">
                   <RiColorFilterFill className="text-red-600 size-5" />
@@ -95,7 +121,7 @@ const Ads = () => {
                   <Button color="purple">Search</Button>
                 </form>
               </div>
-            </div>
+            </div> */}
             {/* Left Side Part End Here */}
             {/* Right Part Start Here */}
             <div className="sm:p-7 flex-1 mt-5 sm:mt-0">

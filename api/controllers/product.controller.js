@@ -24,11 +24,6 @@ export const createADS = async (req, res, next) => {
     if (!image) {
       return next(handleError(403, "Please Upload an Image!"));
     }
-    if (title.length < 5) {
-      return next(
-        handleError(403, "Title Should Be At Least 5 Characters Long!")
-      );
-    }
     if (image) {
       cloudinaryResponse = await cloudinary.uploader.upload(image, {
         folder: "posts",

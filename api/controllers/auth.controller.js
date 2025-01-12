@@ -19,15 +19,15 @@ export const signUpUser = async (req, res, next) => {
     ) {
       return next(handleError(403, "Please Fill All Required Fields!"));
     }
-    const phoneRegex = /^\d{10}$/;
-    if (!phoneRegex.test(phoneNumber)) {
-      return next(
-        handleError(
-          403,
-          "Invalid phone number format. Please enter a valid phone number.!"
-        )
-      );
-    }
+    // const phoneRegex = /^\d{10}$/;
+    // if (!phoneRegex.test(phoneNumber)) {
+    //   return next(
+    //     handleError(
+    //       403,
+    //       "Invalid phone number format. Please enter a valid phone number.!"
+    //     )
+    //   );
+    // }
     const existingUser = await User.findOne({
       $or: [{ email }, { phoneNumber }],
     });
